@@ -17,10 +17,13 @@
     {{ if eq $page.Params.email_form 1 }}
       {{ $post_action = "netlify" }}
     {{ else }}
-      {{ if not site.Params.email }}
-        {{ errorf "Please set an email address for the contact form using the `email` parameter in `config.toml`. Otherwise, set `email_form = 0` to disable the contact form." }}
+      {{ if site.Params.email_form_url }}
+        {{ $post_action = printf "action=\"%s\"" site.Params.email_form_url }}
+      {{ else if site.Params.email }}
+        {{ $post_action = printf "action=\"https://formspree.io/%s\"" site.Params.email }}
+      {{ else }}
+        {{ errorf "Please set an email address or email_form_url for the contact form in `params.toml`. Otherwise, set `email_form = 0` to disable the contact form." }}
       {{ end }}
-      {{ $post_action = printf "action=\"https://formspree.io/%s\"" site.Params.email }}
     {{end}}
 
     <div class="mb-3">
