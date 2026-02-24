@@ -1,0 +1,20 @@
+{{- $icon_sizes := slice 192 512 -}}
+{
+  "name": {{ site.Title | jsonify }},
+  "short_name": {{ site.Title | jsonify }},
+  "start_url": {{ "/" | absLangURL | jsonify }},
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "description": {{ site.Params.description | default site.Title | jsonify }},
+  "icons": [
+    {{- range $i, $size := $icon_sizes -}}
+    {{ if $i }},{{ end }}
+    {
+      "src": {{ printf "/img/icon-%d.png" $size | absURL | jsonify }},
+      "sizes": "{{ $size }}x{{ $size }}",
+      "type": "image/png"
+    }
+    {{- end -}}
+  ]
+}

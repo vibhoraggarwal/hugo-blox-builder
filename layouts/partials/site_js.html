@@ -1,4 +1,4 @@
-    {{ $scr := $.Scratch }}
+    {{ $scr := $.Store }}
 
     {{/* Config LaTeX math rendering. */}}
     {{ if or .Params.math site.Params.math }}
@@ -20,7 +20,7 @@
         {{ printf "<script src=\"%s\" integrity=\"%s\" crossorigin=\"anonymous\" title=\"mermaid\"></script>" (printf $js.mermaid.url $js.mermaid.version) $js.mermaid.sri | safeHTML }}
       {{ end }}
 
-      {{ if $.Scratch.Get "highlight_enabled" }}
+      {{ if $.Store.Get "highlight_enabled" }}
         {{ $v := $js.highlight.version }}
         {{ printf "<script src=\"%s\" integrity=\"%s\" crossorigin=\"anonymous\"></script>" (printf $js.highlight.url $v) $js.highlight.sri | safeHTML }}
         {{ range site.Params.highlight_languages }}
@@ -45,13 +45,13 @@
     {{ end }}
 
     {{/* Comments JS. */}}
-    {{ $comments_enabled := and site.DisqusShortname (not (or site.Params.disable_comments $.Params.disable_comments)) }}
+    {{ $comments_enabled := and site.Config.Services.Disqus.Shortname (not (or site.Params.disable_comments $.Params.disable_comments)) }}
     {{ if and $comments_enabled (site.Params.comment_count | default true) }}
-    <script id="dsq-count-scr" src="https://{{ site.DisqusShortname }}.disqus.com/count.js" async></script>
+    <script id="dsq-count-scr" src="https://{{ site.Config.Services.Disqus.Shortname }}.disqus.com/count.js" async></script>
     {{ end }}
 
     {{/* Initialise code highlighting. */}}
-    {{ if $.Scratch.Get "highlight_enabled" }}
+    {{ if $.Store.Get "highlight_enabled" }}
     <script>hljs.initHighlightingOnLoad();</script>
     {{ end }}
 

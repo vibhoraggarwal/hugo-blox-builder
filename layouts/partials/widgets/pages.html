@@ -15,7 +15,7 @@
 
 {{/* Query */}}
 {{ $query := where site.RegularPages "Type" $items_type }}
-{{ $archive_page := site.GetPage "Section" $items_type }}
+{{ $archive_page := site.GetPage (printf "/%s" $items_type) }}
 
 {{/* Filters */}}
 {{ if $st.Params.content.filters.tag }}

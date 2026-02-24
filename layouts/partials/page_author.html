@@ -6,8 +6,8 @@
 {{/* Otherwise, display first author if a profile for them exists. */}}
 
 {{ $author_urlized := "" }}
-{{ if and (not .Params.authors) (.Scratch.Get "superuser_username") }}
-  {{ $author_urlized = (.Scratch.Get "superuser_username") }}
+{{ if and (not .Params.authors) (.Store.Get "superuser_username") }}
+  {{ $author_urlized = (.Store.Get "superuser_username") }}
 {{ else }}
   {{ $first_author := "" }}
   {{ if .Params.authors }}

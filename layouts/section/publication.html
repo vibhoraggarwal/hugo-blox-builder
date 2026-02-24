@@ -13,7 +13,7 @@
       {{/* Array of distinct years. */}}
       {{ range .Pages.ByDate.Reverse }}
         {{ $year := print (.Date.Format "2006") }}
-        {{ $.Scratch.SetInMap "years" $year $year }}
+        {{ $.Store.SetInMap "years" $year $year }}
       {{ end }}
 
       <div class="form-row mb-4">
@@ -35,7 +35,7 @@
         <div class="col-auto">
           <select class="pub-filters form-control form-control-sm" data-filter-group="year">
             <option value="*">{{ i18n "date" }}</option>
-            {{ $years_sorted := $.Scratch.GetSortedMapValues "years" }}
+            {{ $years_sorted := $.Store.GetSortedMapValues "years" }}
             {{ if $years_sorted }}
             {{ range $year := sort $years_sorted "" "desc" }}
             <option value=".year-{{ $year }}">
@@ -51,12 +51,12 @@
         {{ range .Pages.ByDate.Reverse }}
 
         {{ if .Params.publication_types }}
-          {{ $.Scratch.Set "pubtype" (index .Params.publication_types 0) }}
+          {{ $.Store.Set "pubtype" (index .Params.publication_types 0) }}
         {{ else }}
-          {{ $.Scratch.Set "pubtype" 0 }}
+          {{ $.Store.Set "pubtype" 0 }}
         {{ end }}
 
-        <div class="grid-sizer col-lg-12 isotope-item pubtype-{{ $.Scratch.Get "pubtype" }} year-{{ .Date.Format "2006" }}">
+        <div class="grid-sizer col-lg-12 isotope-item pubtype-{{ $.Store.Get "pubtype" }} year-{{ .Date.Format "2006" }}">
           {{ if eq $.Params.view 1 }}
             {{ partial "li_list" . }}
           {{ else if eq $.Params.view 3 }}

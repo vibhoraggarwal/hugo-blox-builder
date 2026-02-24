@@ -1,4 +1,4 @@
-{{- $scr := .Scratch -}}
+{{- $scr := .Store -}}
 {{- $site := $scr.Get "site" -}}
 {{- partial "functions/parse_theme" . -}}
 
